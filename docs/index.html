@@ -6,400 +6,109 @@
     <title>ForTIFAI: Fending Off Recursive Training Induced Failure for AI Models</title>
     <link rel="stylesheet" href="styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
-    <nav class="navbar">
-        <div class="nav-container">
-            <div class="nav-logo">
-                <h2>ForTIFAI</h2>
-            </div>
-            <ul class="nav-menu">
-                <li><a href="#home" class="nav-link">Home</a></li>
-                <li><a href="#abstract" class="nav-link">Abstract</a></li>
-                <li><a href="#method" class="nav-link">Method</a></li>
-                <li><a href="#results" class="nav-link">Results</a></li>
-                <li><a href="#demo" class="nav-link">Demo</a></li>
-                <li><a href="#code" class="nav-link">Code</a></li>
-            </ul>
-            <div class="hamburger">
-                <span class="bar"></span>
-                <span class="bar"></span>
-                <span class="bar"></span>
-            </div>
-        </div>
-    </nav>
+    <div class="container">
+        <header class="header">
+            <h1>ForTIFAI</h1>
+            <h2>Fending Off Recursive Training Induced Failure for AI Models</h2>
+        </header>
 
-    <main>
-        <!-- Hero Section -->
-        <section id="home" class="hero">
-            <div class="hero-container">
-                <div class="hero-content">
-                    <h1 class="hero-title">ForTIFAI</h1>
-                    <h2 class="hero-subtitle">Fending Off Recursive Training Induced Failure for AI Models</h2>
-                    <p class="hero-description">
-                        A novel approach to mitigate model collapse in AI systems trained on synthetic data using 
-                        Truncated-Cross-Entropy (TCE) loss function.
-                    </p>
-                    <div class="hero-buttons">
-                        <a href="https://arxiv.org/abs/2509.08972" class="btn btn-primary" target="_blank">
-                            <i class="fas fa-file-pdf"></i> Read Paper
-                        </a>
-                        <a href="https://github.com/your-username/ForTIFAI" class="btn btn-secondary" target="_blank">
-                            <i class="fab fa-github"></i> View Code
-                        </a>
-                    </div>
-                    <div class="hero-stats">
-                        <div class="stat">
-                            <span class="stat-number">2.3x</span>
-                            <span class="stat-label">More Synthetic Data Tolerance</span>
-                        </div>
-                        <div class="stat">
-                            <span class="stat-number">6</span>
-                            <span class="stat-label">Training Stages</span>
-                        </div>
-                        <div class="stat">
-                            <span class="stat-number">4</span>
-                            <span class="stat-label">Benchmark Datasets</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="hero-visual">
-                    <div class="model-collapse-diagram">
-                        <div class="diagram-container">
-                            <div class="model-stage" data-stage="0">
-                                <div class="model-icon">🤖</div>
-                                <div class="model-label">Original Model</div>
-                                <div class="performance-bar">
-                                    <div class="performance-fill" style="width: 100%"></div>
-                                </div>
-                            </div>
-                            <div class="arrow">→</div>
-                            <div class="model-stage" data-stage="1">
-                                <div class="model-icon">🤖</div>
-                                <div class="model-label">Stage 1</div>
-                                <div class="performance-bar">
-                                    <div class="performance-fill" style="width: 85%"></div>
-                                </div>
-                            </div>
-                            <div class="arrow">→</div>
-                            <div class="model-stage" data-stage="2">
-                                <div class="model-icon">🤖</div>
-                                <div class="model-label">Stage 2</div>
-                                <div class="performance-bar">
-                                    <div class="performance-fill" style="width: 70%"></div>
-                                </div>
-                            </div>
-                            <div class="arrow">→</div>
-                            <div class="model-stage" data-stage="3">
-                                <div class="model-icon">🤖</div>
-                                <div class="model-label">Stage 3</div>
-                                <div class="performance-bar">
-                                    <div class="performance-fill" style="width: 45%"></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="diagram-legend">
-                            <div class="legend-item">
-                                <div class="legend-color baseline"></div>
-                                <span>Baseline (Collapse)</span>
-                            </div>
-                            <div class="legend-item">
-                                <div class="legend-color fortifai"></div>
-                                <span>ForTIFAI (Resilient)</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+        <main class="main-content">
+            <!-- Authors -->
+            <div class="authors">
+                <p><strong>Soheil Zibakhsh Shabgahi</strong><sup>1</sup>, <strong>Pedram Aghazadeh</strong><sup>1</sup>, <strong>Azalia Mirhoseini</strong><sup>2</sup>, <strong>Farinaz Koushanfar</strong><sup>1</sup></p>
+                <p><sup>1</sup>University of California, San Diego &nbsp;&nbsp; <sup>2</sup>Google DeepMind</p>
             </div>
-        </section>
 
-        <!-- Abstract Section -->
-        <section id="abstract" class="abstract">
-            <div class="container">
-                <h2 class="section-title">Abstract</h2>
-                <div class="abstract-content">
-                    <p class="abstract-text">
-                        The increasing reliance on generative AI models is rapidly increasing the volume of synthetic data, 
-                        with some projections suggesting that most available new data for training could be machine-generated by 2030. 
-                        This shift to a mainly synthetic content presents a critical challenge: repeated training in synthetic data 
-                        leads to a phenomenon known as <strong>model collapse</strong>, where model performance degrades over generations 
-                        of training, eventually rendering the models ineffective.
-                    </p>
-                    <p class="abstract-text">
-                        We address this challenge by leveraging a key insight: auto-regressive models tend to generate text sequences 
-                        to which they assign high confidence (i.e., high log-likelihood). Based on this observation, we introduce 
-                        the <strong>Truncated-Cross-Entropy (TCE) loss function</strong>. TCE mitigates collapse by selectively ignoring 
-                        high-confidence tokens during training, effectively filtering out likely machine-generated artifacts from 
-                        the learning process.
-                    </p>
-                    <div class="key-contributions">
-                        <h3>Key Contributions</h3>
-                        <ul>
-                            <li><i class="fas fa-check"></i> Novel TCE loss function that prevents model collapse</li>
-                            <li><i class="fas fa-check"></i> 2.3x improvement in synthetic data tolerance</li>
-                            <li><i class="fas fa-check"></i> Comprehensive evaluation across multiple benchmarks</li>
-                            <li><i class="fas fa-check"></i> Open-source implementation and benchmark suite</li>
-                        </ul>
-                    </div>
-                </div>
+            <!-- Links -->
+            <div class="links">
+                <a href="https://arxiv.org/abs/2509.08972" class="link">[Paper]</a>
+                <a href="https://github.com/fortifai/ForTIFAI" class="link">[Code]</a>
+                <a href="#abstract" class="link">[Abstract]</a>
             </div>
-        </section>
 
-        <!-- Method Section -->
-        <section id="method" class="method">
-            <div class="container">
-                <h2 class="section-title">Methodology</h2>
-                <div class="method-content">
-                    <div class="method-overview">
-                        <h3>Truncated-Cross-Entropy (TCE) Loss</h3>
-                        <p>
-                            Our key insight is that auto-regressive models tend to generate text sequences to which they assign 
-                            high confidence. The TCE loss function selectively ignores these high-confidence tokens during training, 
-                            effectively filtering out likely machine-generated artifacts.
-                        </p>
-                    </div>
-                    
-                    <div class="method-steps">
-                        <div class="step">
-                            <div class="step-number">1</div>
-                            <div class="step-content">
-                                <h4>High-Confidence Detection</h4>
-                                <p>Identify tokens with high log-likelihood scores that are likely machine-generated</p>
-                            </div>
-                        </div>
-                        <div class="step">
-                            <div class="step-number">2</div>
-                            <div class="step-content">
-                                <h4>Selective Filtering</h4>
-                                <p>Apply TCE loss to ignore high-confidence tokens during training</p>
-                            </div>
-                        </div>
-                        <div class="step">
-                            <div class="step-number">3</div>
-                            <div class="step-content">
-                                <h4>Robust Training</h4>
-                                <p>Train models on filtered data to maintain performance across generations</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="formula-section">
-                        <h3>Mathematical Formulation</h3>
-                        <div class="formula">
-                            <p>TCE Loss = -∑<sub>i</sub> log p(x<sub>i</sub>) · I[log p(x<sub>i</sub>) < τ]</p>
-                            <p class="formula-explanation">
-                                Where τ is the confidence threshold and I[·] is the indicator function
-                            </p>
-                        </div>
-                    </div>
-                </div>
+            <!-- Main Figure -->
+            <div class="figure-container">
+                <img src="https://via.placeholder.com/800x400/4f46e5/ffffff?text=ForTIFAI+Method+Overview" alt="ForTIFAI Method Overview" class="main-figure">
+                <p class="figure-caption">
+                    <strong>Figure 1:</strong> Overview of ForTIFAI approach. (Left) Traditional training leads to model collapse when trained on synthetic data. (Right) Our TCE loss function filters high-confidence tokens during training, preventing collapse and maintaining model performance across generations.
+                </p>
             </div>
-        </section>
 
-        <!-- Results Section -->
-        <section id="results" class="results">
-            <div class="container">
-                <h2 class="section-title">Experimental Results</h2>
-                <div class="results-content">
-                    <div class="results-grid">
-                        <div class="result-card">
-                            <div class="result-icon">
-                                <i class="fas fa-chart-line"></i>
-                            </div>
-                            <h3>2.3x Improvement</h3>
-                            <p>Models trained with TCE tolerate 2.3x more synthetic data before collapse onset</p>
-                        </div>
-                        <div class="result-card">
-                            <div class="result-icon">
-                                <i class="fas fa-shield-alt"></i>
-                            </div>
-                            <h3>Enhanced Resilience</h3>
-                            <p>Significantly delayed performance degradation across multiple benchmarks</p>
-                        </div>
-                        <div class="result-card">
-                            <div class="result-icon">
-                                <i class="fas fa-cogs"></i>
-                            </div>
-                            <h3>Generalizable</h3>
-                            <p>Effective across different model architectures and training scenarios</p>
-                        </div>
-                    </div>
+            <!-- Abstract -->
+            <section id="abstract" class="section">
+                <h3>Abstract</h3>
+                <p>
+                    The increasing reliance on generative AI models is rapidly increasing the volume of synthetic data, 
+                    with some projections suggesting that most available new data for training could be machine-generated by 2030. 
+                    This shift to a mainly synthetic content presents a critical challenge: repeated training in synthetic data 
+                    leads to a phenomenon known as <strong>model collapse</strong>, where model performance degrades over generations 
+                    of training, eventually rendering the models ineffective.
+                </p>
+                <p>
+                    We address this challenge by leveraging a key insight: auto-regressive models tend to generate text sequences 
+                    to which they assign high confidence (i.e., high log-likelihood). Based on this observation, we introduce 
+                    the <strong>Truncated-Cross-Entropy (TCE) loss function</strong>. TCE mitigates collapse by selectively ignoring 
+                    high-confidence tokens during training, effectively filtering out likely machine-generated artifacts from 
+                    the learning process.
+                </p>
+                <p>
+                    Our experiments demonstrate that models trained with TCE not only learn effectively but also exhibit 
+                    significantly increased resilience, tolerating over <strong>2.3x more synthetic data</strong> before the onset of collapse. 
+                    In addition, we provide an open-source benchmark for collapse dynamics in mixed-data settings.
+                </p>
+            </section>
 
-                    <div class="benchmark-results">
-                        <h3>Benchmark Performance</h3>
-                        <div class="benchmark-table">
-                            <table>
-                                <thead>
-                                    <tr>
-                                        <th>Benchmark</th>
-                                        <th>Baseline</th>
-                                        <th>ForTIFAI</th>
-                                        <th>Improvement</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>BLIMP</td>
-                                        <td>65.2%</td>
-                                        <td>78.4%</td>
-                                        <td>+13.2%</td>
-                                    </tr>
-                                    <tr>
-                                        <td>GSM8K</td>
-                                        <td>42.1%</td>
-                                        <td>58.7%</td>
-                                        <td>+16.6%</td>
-                                    </tr>
-                                    <tr>
-                                        <td>HellaSwag</td>
-                                        <td>71.3%</td>
-                                        <td>82.9%</td>
-                                        <td>+11.6%</td>
-                                    </tr>
-                                    <tr>
-                                        <td>WikiText-2</td>
-                                        <td>45.2</td>
-                                        <td>38.7</td>
-                                        <td>-6.5 PPL</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
+            <!-- Method -->
+            <section class="section">
+                <h3>Method</h3>
+                <p>
+                    We use the Truncated-Cross-Entropy (TCE) loss function to filter high-confidence tokens during training. 
+                    The TCE loss is defined as:
+                </p>
+                <div class="formula">
+                    L<sub>TCE</sub> = -∑<sub>i=1</sub><sup>N</sup> log p(x<sub>i</sub>) · I[log p(x<sub>i</sub>) < τ]
                 </div>
-            </div>
-        </section>
+                <p>
+                    where τ is the confidence threshold and I[·] is the indicator function. This approach prevents the model 
+                    from learning to reproduce high-confidence synthetic artifacts while preserving useful information from 
+                    low-confidence tokens.
+                </p>
+            </section>
 
-        <!-- Demo Section -->
-        <section id="demo" class="demo">
-            <div class="container">
-                <h2 class="section-title">Interactive Demo</h2>
-                <div class="demo-content">
-                    <div class="demo-description">
-                        <p>Explore how ForTIFAI prevents model collapse through our interactive demonstration.</p>
-                    </div>
-                    <div class="demo-interactive">
-                        <div class="demo-controls">
-                            <label for="synthetic-ratio">Synthetic Data Ratio:</label>
-                            <input type="range" id="synthetic-ratio" min="0" max="100" value="50">
-                            <span id="ratio-value">50%</span>
-                        </div>
-                        <div class="demo-visualization">
-                            <div class="performance-chart">
-                                <canvas id="performance-canvas" width="600" height="300"></canvas>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
+            <!-- Results -->
+            <section class="section">
+                <h3>Results</h3>
+                <p>
+                    We evaluate our approach on multiple benchmarks including BLIMP, GSM8K, HellaSwag, and WikiText-2. 
+                    Models trained with TCE show significant improvements:
+                </p>
+                <ul>
+                    <li><strong>2.3x improvement</strong> in synthetic data tolerance</li>
+                    <li><strong>+13.2%</strong> improvement on BLIMP benchmark</li>
+                    <li><strong>+16.6%</strong> improvement on GSM8K mathematical reasoning</li>
+                    <li><strong>+11.6%</strong> improvement on HellaSwag commonsense reasoning</li>
+                </ul>
+            </section>
 
-        <!-- Code Section -->
-        <section id="code" class="code">
-            <div class="container">
-                <h2 class="section-title">Code & Resources</h2>
-                <div class="code-content">
-                    <div class="code-grid">
-                        <div class="code-card">
-                            <div class="code-icon">
-                                <i class="fab fa-github"></i>
-                            </div>
-                            <h3>GitHub Repository</h3>
-                            <p>Complete implementation with training scripts, evaluation tools, and documentation</p>
-                            <a href="https://github.com/your-username/ForTIFAI" class="code-link" target="_blank">
-                                View on GitHub <i class="fas fa-external-link-alt"></i>
-                            </a>
-                        </div>
-                        <div class="code-card">
-                            <div class="code-icon">
-                                <i class="fas fa-download"></i>
-                            </div>
-                            <h3>Pre-trained Models</h3>
-                            <p>Download our pre-trained models and checkpoints for immediate use</p>
-                            <a href="#" class="code-link">
-                                Download Models <i class="fas fa-external-link-alt"></i>
-                            </a>
-                        </div>
-                        <div class="code-card">
-                            <div class="code-icon">
-                                <i class="fas fa-book"></i>
-                            </div>
-                            <h3>Documentation</h3>
-                            <p>Comprehensive documentation and tutorials for implementation</p>
-                            <a href="#" class="code-link">
-                                Read Docs <i class="fas fa-external-link-alt"></i>
-                            </a>
-                        </div>
-                    </div>
+            <!-- Citation -->
+            <section class="section">
+                <h3>Citation</h3>
+                <div class="citation">
+                    <pre>@article{shabgahi2025fortifai,
+  title={ForTIFAI: Fending Off Recursive Training Induced Failure for AI Models},
+  author={Shabgahi, Soheil Zibakhsh and Aghazadeh, Pedram and Mirhoseini, Azalia and Koushanfar, Farinaz},
+  journal={arXiv preprint arXiv:2509.08972},
+  year={2025}
+}</pre>
                 </div>
-            </div>
-        </section>
+            </section>
+        </main>
 
-        <!-- Authors Section -->
-        <section class="authors">
-            <div class="container">
-                <h2 class="section-title">Authors</h2>
-                <div class="authors-grid">
-                    <div class="author-card">
-                        <div class="author-avatar">
-                            <i class="fas fa-user"></i>
-                        </div>
-                        <h3>Soheil Zibakhsh Shabgahi</h3>
-                        <p>University of California, San Diego</p>
-                    </div>
-                    <div class="author-card">
-                        <div class="author-avatar">
-                            <i class="fas fa-user"></i>
-                        </div>
-                        <h3>Pedram Aghazadeh</h3>
-                        <p>University of California, San Diego</p>
-                    </div>
-                    <div class="author-card">
-                        <div class="author-avatar">
-                            <i class="fas fa-user"></i>
-                        </div>
-                        <h3>Azalia Mirhoseini</h3>
-                        <p>Google DeepMind</p>
-                    </div>
-                    <div class="author-card">
-                        <div class="author-avatar">
-                            <i class="fas fa-user"></i>
-                        </div>
-                        <h3>Farinaz Koushanfar</h3>
-                        <p>University of California, San Diego</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </main>
-
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-section">
-                    <h3>ForTIFAI</h3>
-                    <p>Fending Off Recursive Training Induced Failure for AI Models</p>
-                </div>
-                <div class="footer-section">
-                    <h4>Links</h4>
-                    <ul>
-                        <li><a href="https://arxiv.org/abs/2509.08972">Paper</a></li>
-                        <li><a href="https://github.com/your-username/ForTIFAI">Code</a></li>
-                        <li><a href="#demo">Demo</a></li>
-                    </ul>
-                </div>
-                <div class="footer-section">
-                    <h4>Contact</h4>
-                    <p>For questions and collaborations, please reach out to the authors.</p>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <p>&copy; 2025 ForTIFAI. All rights reserved.</p>
-            </div>
-        </div>
-    </footer>
-
-    <script src="script.js"></script>
+        <footer class="footer">
+            <p>Correspondence to: <a href="mailto:contact@fortifai.org">contact@fortifai.org</a></p>
+        </footer>
+    </div>
 </body>
 </html>
