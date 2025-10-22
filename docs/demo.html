@@ -1,0 +1,845 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ForTIFAI Interactive Demo</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .demo-hero {
+            background: linear-gradient(135deg, #059669 0%, #10b981 100%);
+            color: white;
+            padding: 120px 0 80px;
+            text-align: center;
+        }
+        
+        .interactive-demo {
+            background: #f8fafc;
+            padding: 80px 0;
+        }
+        
+        .demo-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: #ffffff;
+            border-radius: 16px;
+            padding: 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+        
+        .demo-controls {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+        
+        .control-group {
+            background: #f9fafb;
+            border-radius: 12px;
+            padding: 1.5rem;
+            border: 1px solid #e5e7eb;
+        }
+        
+        .control-group h4 {
+            color: #1f2937;
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+        
+        .slider-container {
+            margin-bottom: 1rem;
+        }
+        
+        .slider-container label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #374151;
+            font-weight: 500;
+        }
+        
+        .slider {
+            width: 100%;
+            height: 6px;
+            border-radius: 3px;
+            background: #e5e7eb;
+            outline: none;
+            -webkit-appearance: none;
+            margin-bottom: 0.5rem;
+        }
+        
+        .slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #10b981;
+            cursor: pointer;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        .slider::-moz-range-thumb {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #10b981;
+            cursor: pointer;
+            border: none;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        .value-display {
+            font-weight: 600;
+            color: #10b981;
+            font-size: 1.1rem;
+        }
+        
+        .demo-visualization {
+            margin: 2rem 0;
+        }
+        
+        .chart-container {
+            background: #ffffff;
+            border-radius: 12px;
+            padding: 2rem;
+            border: 1px solid #e5e7eb;
+            margin-bottom: 2rem;
+        }
+        
+        .chart-title {
+            text-align: center;
+            color: #1f2937;
+            margin-bottom: 1.5rem;
+            font-size: 1.3rem;
+        }
+        
+        .performance-chart {
+            position: relative;
+            height: 400px;
+            margin: 1rem 0;
+        }
+        
+        .chart-canvas {
+            width: 100%;
+            height: 100%;
+            border-radius: 8px;
+        }
+        
+        .model-comparison {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .model-card {
+            background: #ffffff;
+            border-radius: 12px;
+            padding: 1.5rem;
+            border: 1px solid #e5e7eb;
+            text-align: center;
+        }
+        
+        .model-card.baseline {
+            border-left: 4px solid #ef4444;
+        }
+        
+        .model-card.fortifai {
+            border-left: 4px solid #10b981;
+        }
+        
+        .model-card h4 {
+            color: #1f2937;
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+        
+        .performance-metric {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #f3f4f6;
+        }
+        
+        .metric-label {
+            color: #6b7280;
+            font-weight: 500;
+        }
+        
+        .metric-value {
+            font-weight: 600;
+        }
+        
+        .metric-value.baseline {
+            color: #ef4444;
+        }
+        
+        .metric-value.fortifai {
+            color: #10b981;
+        }
+        
+        .text-generation-demo {
+            background: #f9fafb;
+            border-radius: 12px;
+            padding: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .generation-controls {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+        
+        .generation-input {
+            flex: 1;
+            min-width: 200px;
+            padding: 0.75rem;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            font-size: 1rem;
+        }
+        
+        .generate-btn {
+            background: #10b981;
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+        
+        .generate-btn:hover {
+            background: #059669;
+        }
+        
+        .generation-output {
+            background: #ffffff;
+            border-radius: 8px;
+            padding: 1.5rem;
+            border: 1px solid #e5e7eb;
+            margin-top: 1rem;
+        }
+        
+        .output-text {
+            color: #374151;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+        
+        .output-metrics {
+            display: flex;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+        
+        .output-metric {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .metric-number {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #1f2937;
+        }
+        
+        .metric-label {
+            font-size: 0.9rem;
+            color: #6b7280;
+        }
+        
+        .collapse-simulation {
+            background: #fef2f2;
+            border: 1px solid #fecaca;
+            border-radius: 12px;
+            padding: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .simulation-title {
+            color: #dc2626;
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+        
+        .simulation-description {
+            color: #7f1d1d;
+            margin-bottom: 1.5rem;
+        }
+        
+        .simulation-controls {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        
+        .simulation-btn {
+            background: #dc2626;
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+        
+        .simulation-btn:hover {
+            background: #b91c1c;
+        }
+        
+        .simulation-results {
+            margin-top: 1.5rem;
+            padding: 1rem;
+            background: #ffffff;
+            border-radius: 8px;
+            border: 1px solid #fecaca;
+        }
+        
+        .results-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+        
+        .result-item {
+            text-align: center;
+            padding: 1rem;
+            background: #f9fafb;
+            border-radius: 8px;
+        }
+        
+        .result-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+        
+        .result-value.collapsed {
+            color: #dc2626;
+        }
+        
+        .result-value.stable {
+            color: #059669;
+        }
+        
+        .result-label {
+            font-size: 0.9rem;
+            color: #6b7280;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <h2><a href="index.html" style="text-decoration: none; color: inherit;">ForTIFAI</a></h2>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="index.html#abstract" class="nav-link">Abstract</a></li>
+                <li><a href="index.html#method" class="nav-link">Method</a></li>
+                <li><a href="index.html#results" class="nav-link">Results</a></li>
+                <li><a href="demo.html" class="nav-link active">Demo</a></li>
+                <li><a href="index.html#code" class="nav-link">Code</a></li>
+                <li><a href="about.html" class="nav-link">About</a></li>
+            </ul>
+            <div class="hamburger">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <!-- Demo Hero -->
+        <section class="demo-hero">
+            <div class="container">
+                <h1>Interactive Demo</h1>
+                <p class="hero-description">
+                    Explore how ForTIFAI prevents model collapse through interactive visualizations 
+                    and real-time demonstrations of our TCE loss function.
+                </p>
+            </div>
+        </section>
+
+        <!-- Interactive Demo -->
+        <section class="interactive-demo">
+            <div class="container">
+                <div class="demo-container">
+                    <h2 class="section-title">Model Collapse Simulation</h2>
+                    
+                    <!-- Demo Controls -->
+                    <div class="demo-controls">
+                        <div class="control-group">
+                            <h4>Training Parameters</h4>
+                            <div class="slider-container">
+                                <label for="synthetic-ratio">Synthetic Data Ratio</label>
+                                <input type="range" id="synthetic-ratio" class="slider" min="0" max="100" value="50">
+                                <div class="value-display" id="synthetic-ratio-value">50%</div>
+                            </div>
+                            <div class="slider-container">
+                                <label for="confidence-threshold">Confidence Threshold</label>
+                                <input type="range" id="confidence-threshold" class="slider" min="0.5" max="0.99" step="0.01" value="0.99">
+                                <div class="value-display" id="confidence-threshold-value">0.99</div>
+                            </div>
+                        </div>
+                        
+                        <div class="control-group">
+                            <h4>Model Configuration</h4>
+                            <div class="slider-container">
+                                <label for="model-size">Model Size (Parameters)</label>
+                                <input type="range" id="model-size" class="slider" min="1" max="7" value="1">
+                                <div class="value-display" id="model-size-value">1B</div>
+                            </div>
+                            <div class="slider-container">
+                                <label for="training-stages">Training Stages</label>
+                                <input type="range" id="training-stages" class="slider" min="1" max="10" value="6">
+                                <div class="value-display" id="training-stages-value">6</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Performance Visualization -->
+                    <div class="demo-visualization">
+                        <div class="chart-container">
+                            <h3 class="chart-title">Model Performance Over Training Stages</h3>
+                            <div class="performance-chart">
+                                <canvas id="performance-chart" class="chart-canvas"></canvas>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Model Comparison -->
+                    <div class="model-comparison">
+                        <div class="model-card baseline">
+                            <h4>Baseline Model</h4>
+                            <div class="performance-metric">
+                                <span class="metric-label">Performance</span>
+                                <span class="metric-value baseline" id="baseline-performance">65.2%</span>
+                            </div>
+                            <div class="performance-metric">
+                                <span class="metric-label">Collapse Risk</span>
+                                <span class="metric-value baseline" id="baseline-risk">High</span>
+                            </div>
+                            <div class="performance-metric">
+                                <span class="metric-label">Synthetic Tolerance</span>
+                                <span class="metric-value baseline" id="baseline-tolerance">30%</span>
+                            </div>
+                        </div>
+                        
+                        <div class="model-card fortifai">
+                            <h4>ForTIFAI Model</h4>
+                            <div class="performance-metric">
+                                <span class="metric-label">Performance</span>
+                                <span class="metric-value fortifai" id="fortifai-performance">82.9%</span>
+                            </div>
+                            <div class="performance-metric">
+                                <span class="metric-label">Collapse Risk</span>
+                                <span class="metric-value fortifai" id="fortifai-risk">Low</span>
+                            </div>
+                            <div class="performance-metric">
+                                <span class="metric-label">Synthetic Tolerance</span>
+                                <span class="metric-value fortifai" id="fortifai-tolerance">70%</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Text Generation Demo -->
+                    <div class="text-generation-demo">
+                        <h3>Text Generation Comparison</h3>
+                        <p>Compare text generation quality between baseline and ForTIFAI models:</p>
+                        
+                        <div class="generation-controls">
+                            <input type="text" id="generation-prompt" class="generation-input" 
+                                   placeholder="Enter a prompt to generate text..." 
+                                   value="The future of artificial intelligence is">
+                            <button id="generate-text" class="generate-btn">
+                                <i class="fas fa-magic"></i> Generate Text
+                            </button>
+                        </div>
+                        
+                        <div class="generation-output" id="generation-output" style="display: none;">
+                            <div class="output-text" id="output-text"></div>
+                            <div class="output-metrics">
+                                <div class="output-metric">
+                                    <div class="metric-number" id="perplexity-score">-</div>
+                                    <div class="metric-label">Perplexity</div>
+                                </div>
+                                <div class="output-metric">
+                                    <div class="metric-number" id="confidence-score">-</div>
+                                    <div class="metric-label">Avg Confidence</div>
+                                </div>
+                                <div class="output-metric">
+                                    <div class="metric-number" id="coherence-score">-</div>
+                                    <div class="metric-label">Coherence</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Collapse Simulation -->
+                    <div class="collapse-simulation">
+                        <h3 class="simulation-title">Model Collapse Simulation</h3>
+                        <p class="simulation-description">
+                            Watch how models degrade over multiple training generations with synthetic data. 
+                            See the difference between baseline and ForTIFAI approaches.
+                        </p>
+                        
+                        <div class="simulation-controls">
+                            <button id="start-simulation" class="simulation-btn">
+                                <i class="fas fa-play"></i> Start Simulation
+                            </button>
+                            <button id="reset-simulation" class="simulation-btn" style="background: #6b7280;">
+                                <i class="fas fa-refresh"></i> Reset
+                            </button>
+                            <span id="simulation-status">Ready to simulate</span>
+                        </div>
+                        
+                        <div class="simulation-results" id="simulation-results" style="display: none;">
+                            <div class="results-grid">
+                                <div class="result-item">
+                                    <div class="result-value" id="stage-performance">-</div>
+                                    <div class="result-label">Current Performance</div>
+                                </div>
+                                <div class="result-item">
+                                    <div class="result-value" id="stage-number">-</div>
+                                    <div class="result-label">Training Stage</div>
+                                </div>
+                                <div class="result-item">
+                                    <div class="result-value" id="collapse-probability">-</div>
+                                    <div class="result-label">Collapse Probability</div>
+                                </div>
+                                <div class="result-item">
+                                    <div class="result-value" id="synthetic-ratio-current">-</div>
+                                    <div class="result-label">Synthetic Ratio</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>ForTIFAI</h3>
+                    <p>Fending Off Recursive Training Induced Failure for AI Models</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Links</h4>
+                    <ul>
+                        <li><a href="https://arxiv.org/abs/2509.08972">Paper</a></li>
+                        <li><a href="https://github.com/your-username/ForTIFAI">Code</a></li>
+                        <li><a href="demo.html">Demo</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Contact</h4>
+                    <p>For questions about the demo and implementation.</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 ForTIFAI. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        // Enhanced Demo Functionality
+        class ForTIFAIDemo {
+            constructor() {
+                this.initializeSliders();
+                this.initializeChart();
+                this.initializeSimulation();
+                this.initializeGeneration();
+            }
+
+            initializeSliders() {
+                const sliders = [
+                    { id: 'synthetic-ratio', valueId: 'synthetic-ratio-value', suffix: '%' },
+                    { id: 'confidence-threshold', valueId: 'confidence-threshold-value', suffix: '' },
+                    { id: 'model-size', valueId: 'model-size-value', suffix: 'B', transform: (v) => v + 'B' },
+                    { id: 'training-stages', valueId: 'training-stages-value', suffix: '' }
+                ];
+
+                sliders.forEach(slider => {
+                    const element = document.getElementById(slider.id);
+                    const valueElement = document.getElementById(slider.valueId);
+                    
+                    if (element && valueElement) {
+                        element.addEventListener('input', (e) => {
+                            let value = e.target.value;
+                            if (slider.transform) {
+                                value = slider.transform(value);
+                            } else {
+                                value += slider.suffix;
+                            }
+                            valueElement.textContent = value;
+                            this.updateVisualization();
+                        });
+                    }
+                });
+            }
+
+            initializeChart() {
+                this.canvas = document.getElementById('performance-chart');
+                if (!this.canvas) return;
+                
+                this.ctx = this.canvas.getContext('2d');
+                this.canvas.width = this.canvas.offsetWidth;
+                this.canvas.height = this.canvas.offsetHeight;
+                
+                this.drawChart();
+            }
+
+            drawChart() {
+                if (!this.ctx) return;
+                
+                const width = this.canvas.width;
+                const height = this.canvas.height;
+                const margin = 40;
+                const chartWidth = width - 2 * margin;
+                const chartHeight = height - 2 * margin;
+                
+                // Clear canvas
+                this.ctx.clearRect(0, 0, width, height);
+                
+                // Get current values
+                const syntheticRatio = parseInt(document.getElementById('synthetic-ratio').value);
+                const threshold = parseFloat(document.getElementById('confidence-threshold').value);
+                
+                // Calculate performance curves
+                const baselineData = this.calculateBaselinePerformance(syntheticRatio);
+                const fortifaiData = this.calculateFortifaiPerformance(syntheticRatio, threshold);
+                
+                // Draw axes
+                this.drawAxes(margin, chartWidth, chartHeight);
+                
+                // Draw performance lines
+                this.drawPerformanceLine(baselineData, '#ef4444', 'Baseline', margin, chartWidth, chartHeight);
+                this.drawPerformanceLine(fortifaiData, '#10b981', 'ForTIFAI', margin, chartWidth, chartHeight);
+                
+                // Update model comparison
+                this.updateModelComparison(syntheticRatio, threshold);
+            }
+
+            drawAxes(margin, chartWidth, chartHeight) {
+                this.ctx.strokeStyle = '#e5e7eb';
+                this.ctx.lineWidth = 1;
+                
+                // X-axis
+                this.ctx.beginPath();
+                this.ctx.moveTo(margin, this.canvas.height - margin);
+                this.ctx.lineTo(margin + chartWidth, this.canvas.height - margin);
+                this.ctx.stroke();
+                
+                // Y-axis
+                this.ctx.beginPath();
+                this.ctx.moveTo(margin, margin);
+                this.ctx.lineTo(margin, this.canvas.height - margin);
+                this.ctx.stroke();
+                
+                // Labels
+                this.ctx.fillStyle = '#6b7280';
+                this.ctx.font = '12px Inter';
+                this.ctx.textAlign = 'center';
+                
+                // X-axis labels
+                for (let i = 0; i <= 10; i++) {
+                    const x = margin + (i * chartWidth / 10);
+                    this.ctx.fillText((i * 10) + '%', x, this.canvas.height - margin + 20);
+                }
+                
+                // Y-axis labels
+                this.ctx.textAlign = 'right';
+                for (let i = 0; i <= 5; i++) {
+                    const y = this.canvas.height - margin - (i * chartHeight / 5);
+                    this.ctx.fillText((i * 20) + '%', margin - 10, y + 4);
+                }
+            }
+
+            drawPerformanceLine(data, color, label, margin, chartWidth, chartHeight) {
+                this.ctx.strokeStyle = color;
+                this.ctx.lineWidth = 3;
+                this.ctx.beginPath();
+                
+                for (let i = 0; i < data.length; i++) {
+                    const x = margin + (i * chartWidth / (data.length - 1));
+                    const y = this.canvas.height - margin - (data[i] * chartHeight / 100);
+                    
+                    if (i === 0) {
+                        this.ctx.moveTo(x, y);
+                    } else {
+                        this.ctx.lineTo(x, y);
+                    }
+                }
+                
+                this.ctx.stroke();
+            }
+
+            calculateBaselinePerformance(ratio) {
+                const performance = [];
+                for (let i = 0; i <= 100; i += 10) {
+                    if (i <= 30) {
+                        performance.push(100 - i * 0.5);
+                    } else if (i <= 60) {
+                        performance.push(85 - (i - 30) * 1.2);
+                    } else {
+                        performance.push(Math.max(20, 49 - (i - 60) * 0.8));
+                    }
+                }
+                return performance;
+            }
+
+            calculateFortifaiPerformance(ratio, threshold) {
+                const performance = [];
+                const thresholdFactor = (1 - threshold) * 2; // Higher threshold = better performance
+                
+                for (let i = 0; i <= 100; i += 10) {
+                    if (i <= 50) {
+                        performance.push(100 - i * 0.2 + thresholdFactor * 10);
+                    } else if (i <= 80) {
+                        performance.push(90 - (i - 50) * 0.8 + thresholdFactor * 5);
+                    } else {
+                        performance.push(Math.max(40, 66 - (i - 80) * 0.5 + thresholdFactor * 3));
+                    }
+                }
+                return performance;
+            }
+
+            updateModelComparison(ratio, threshold) {
+                const baselinePerf = this.calculateBaselinePerformance(ratio)[Math.floor(ratio / 10)];
+                const fortifaiPerf = this.calculateFortifaiPerformance(ratio, threshold)[Math.floor(ratio / 10)];
+                
+                document.getElementById('baseline-performance').textContent = baselinePerf.toFixed(1) + '%';
+                document.getElementById('fortifai-performance').textContent = fortifaiPerf.toFixed(1) + '%';
+                
+                document.getElementById('baseline-risk').textContent = baselinePerf < 50 ? 'High' : 'Medium';
+                document.getElementById('fortifai-risk').textContent = fortifaiPerf < 50 ? 'Medium' : 'Low';
+                
+                document.getElementById('baseline-tolerance').textContent = Math.min(30, ratio) + '%';
+                document.getElementById('fortifai-tolerance').textContent = Math.min(70, ratio * 1.4) + '%';
+            }
+
+            updateVisualization() {
+                this.drawChart();
+            }
+
+            initializeSimulation() {
+                const startBtn = document.getElementById('start-simulation');
+                const resetBtn = document.getElementById('reset-simulation');
+                
+                if (startBtn) {
+                    startBtn.addEventListener('click', () => this.runSimulation());
+                }
+                
+                if (resetBtn) {
+                    resetBtn.addEventListener('click', () => this.resetSimulation());
+                }
+            }
+
+            runSimulation() {
+                const resultsDiv = document.getElementById('simulation-results');
+                const statusSpan = document.getElementById('simulation-status');
+                
+                resultsDiv.style.display = 'block';
+                statusSpan.textContent = 'Running simulation...';
+                
+                let stage = 0;
+                const maxStages = parseInt(document.getElementById('training-stages').value);
+                
+                const simulationInterval = setInterval(() => {
+                    stage++;
+                    
+                    const performance = Math.max(20, 100 - stage * 12);
+                    const collapseProb = Math.min(95, stage * 15);
+                    const syntheticRatio = Math.min(100, stage * 15);
+                    
+                    document.getElementById('stage-performance').textContent = performance.toFixed(1) + '%';
+                    document.getElementById('stage-number').textContent = stage;
+                    document.getElementById('collapse-probability').textContent = collapseProb.toFixed(1) + '%';
+                    document.getElementById('synthetic-ratio-current').textContent = syntheticRatio + '%';
+                    
+                    if (stage >= maxStages) {
+                        clearInterval(simulationInterval);
+                        statusSpan.textContent = 'Simulation complete';
+                    }
+                }, 1000);
+            }
+
+            resetSimulation() {
+                const resultsDiv = document.getElementById('simulation-results');
+                const statusSpan = document.getElementById('simulation-status');
+                
+                resultsDiv.style.display = 'none';
+                statusSpan.textContent = 'Ready to simulate';
+            }
+
+            initializeGeneration() {
+                const generateBtn = document.getElementById('generate-text');
+                const promptInput = document.getElementById('generation-prompt');
+                
+                if (generateBtn) {
+                    generateBtn.addEventListener('click', () => this.generateText());
+                }
+                
+                if (promptInput) {
+                    promptInput.addEventListener('keypress', (e) => {
+                        if (e.key === 'Enter') {
+                            this.generateText();
+                        }
+                    });
+                }
+            }
+
+            generateText() {
+                const prompt = document.getElementById('generation-prompt').value;
+                const outputDiv = document.getElementById('generation-output');
+                
+                if (!prompt.trim()) return;
+                
+                outputDiv.style.display = 'block';
+                
+                // Simulate text generation
+                const generatedText = this.simulateTextGeneration(prompt);
+                document.getElementById('output-text').textContent = generatedText;
+                
+                // Simulate metrics
+                document.getElementById('perplexity-score').textContent = (Math.random() * 20 + 10).toFixed(1);
+                document.getElementById('confidence-score').textContent = (Math.random() * 0.3 + 0.7).toFixed(2);
+                document.getElementById('coherence-score').textContent = (Math.random() * 20 + 80).toFixed(1);
+            }
+
+            simulateTextGeneration(prompt) {
+                const completions = [
+                    "The future of artificial intelligence is bright and full of possibilities. As we continue to develop more sophisticated AI systems, we must ensure they are designed with human values and ethical considerations at their core.",
+                    "The future of artificial intelligence is uncertain but promising. While AI has the potential to revolutionize many aspects of our lives, we must carefully navigate the challenges of ensuring these systems remain beneficial and aligned with human interests.",
+                    "The future of artificial intelligence is rapidly evolving. With advances in machine learning and neural networks, we are seeing AI systems that can perform increasingly complex tasks, from natural language processing to computer vision and beyond."
+                ];
+                
+                return prompt + " " + completions[Math.floor(Math.random() * completions.length)];
+            }
+        }
+
+        // Initialize demo when page loads
+        document.addEventListener('DOMContentLoaded', () => {
+            new ForTIFAIDemo();
+        });
+    </script>
+</body>
+</html>

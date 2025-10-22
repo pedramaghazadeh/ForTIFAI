@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About ForTIFAI - Methodology & Technical Details</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .about-hero {
+            background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
+            color: white;
+            padding: 120px 0 80px;
+            text-align: center;
+        }
+        
+        .methodology-detail {
+            background: #f8fafc;
+            padding: 80px 0;
+        }
+        
+        .technical-specs {
+            background: #ffffff;
+            padding: 80px 0;
+        }
+        
+        .algorithm-flow {
+            background: #f0f9ff;
+            padding: 80px 0;
+        }
+        
+        .implementation-details {
+            background: #f8fafc;
+            padding: 80px 0;
+        }
+        
+        .code-block {
+            background: #1f2937;
+            color: #f9fafb;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+        
+        .algorithm-step {
+            display: flex;
+            align-items: flex-start;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+            padding: 1.5rem;
+            background: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+        
+        .step-number {
+            width: 40px;
+            height: 40px;
+            background: #3b82f6;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+        
+        .step-content h4 {
+            color: #1f2937;
+            margin-bottom: 0.5rem;
+            font-size: 1.2rem;
+        }
+        
+        .step-content p {
+            color: #6b7280;
+            line-height: 1.6;
+        }
+        
+        .formula-container {
+            background: #ffffff;
+            border-radius: 12px;
+            padding: 2rem;
+            margin: 2rem 0;
+            border: 1px solid #e5e7eb;
+            text-align: center;
+        }
+        
+        .formula {
+            font-size: 1.3rem;
+            font-family: 'Courier New', monospace;
+            color: #1f2937;
+            margin: 1rem 0;
+            padding: 1rem;
+            background: #f9fafb;
+            border-radius: 8px;
+        }
+        
+        .formula-explanation {
+            color: #6b7280;
+            font-style: italic;
+            margin-top: 0.5rem;
+        }
+        
+        .spec-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .spec-card {
+            background: #ffffff;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e5e7eb;
+        }
+        
+        .spec-card h4 {
+            color: #1f2937;
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+        
+        .spec-card ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .spec-card li {
+            color: #6b7280;
+            margin-bottom: 0.5rem;
+            padding-left: 1rem;
+            position: relative;
+        }
+        
+        .spec-card li::before {
+            content: '•';
+            color: #3b82f6;
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <h2><a href="index.html" style="text-decoration: none; color: inherit;">ForTIFAI</a></h2>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="index.html#abstract" class="nav-link">Abstract</a></li>
+                <li><a href="index.html#method" class="nav-link">Method</a></li>
+                <li><a href="index.html#results" class="nav-link">Results</a></li>
+                <li><a href="index.html#demo" class="nav-link">Demo</a></li>
+                <li><a href="index.html#code" class="nav-link">Code</a></li>
+                <li><a href="about.html" class="nav-link active">About</a></li>
+            </ul>
+            <div class="hamburger">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <!-- About Hero -->
+        <section class="about-hero">
+            <div class="container">
+                <h1>About ForTIFAI</h1>
+                <p class="hero-description">
+                    Deep dive into the technical methodology, implementation details, and scientific foundations 
+                    of our approach to preventing model collapse in AI systems.
+                </p>
+            </div>
+        </section>
+
+        <!-- Methodology Detail -->
+        <section class="methodology-detail">
+            <div class="container">
+                <h2 class="section-title">Methodology Deep Dive</h2>
+                <div class="methodology-content">
+                    <div class="methodology-overview">
+                        <h3>Core Insight: High-Confidence Token Filtering</h3>
+                        <p>
+                            Our approach is based on a key observation: auto-regressive language models tend to generate 
+                            text sequences to which they assign high confidence (high log-likelihood scores). These 
+                            high-confidence tokens are often artifacts of the model's training on synthetic data and 
+                            contribute to the recursive degradation known as model collapse.
+                        </p>
+                    </div>
+
+                    <div class="formula-container">
+                        <h3>Truncated-Cross-Entropy (TCE) Loss Function</h3>
+                        <div class="formula">
+                            L_TCE = -∑<sub>i=1</sub><sup>N</sup> log p(x<sub>i</sub>) · I[log p(x<sub>i</sub>) < τ]
+                        </div>
+                        <div class="formula-explanation">
+                            Where τ is the confidence threshold, I[·] is the indicator function, and p(x<sub>i</sub>) is the model's probability for token x<sub>i</sub>
+                        </div>
+                    </div>
+
+                    <div class="algorithm-flow">
+                        <h3>Algorithm Flow</h3>
+                        <div class="algorithm-step">
+                            <div class="step-number">1</div>
+                            <div class="step-content">
+                                <h4>Confidence Calculation</h4>
+                                <p>
+                                    For each token in the training sequence, compute the log-likelihood score 
+                                    log p(x<sub>i</sub>) using the current model parameters.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="algorithm-step">
+                            <div class="step-number">2</div>
+                            <div class="step-content">
+                                <h4>Threshold Application</h4>
+                                <p>
+                                    Apply the confidence threshold τ to identify high-confidence tokens that 
+                                    are likely machine-generated artifacts.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="algorithm-step">
+                            <div class="step-number">3</div>
+                            <div class="step-content">
+                                <h4>Selective Training</h4>
+                                <p>
+                                    Compute the TCE loss by only considering tokens below the threshold, 
+                                    effectively filtering out high-confidence artifacts during training.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="algorithm-step">
+                            <div class="step-number">4</div>
+                            <div class="step-content">
+                                <h4>Gradient Update</h4>
+                                <p>
+                                    Update model parameters using the filtered loss, preventing the model 
+                                    from learning to reproduce synthetic artifacts.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Technical Specifications -->
+        <section class="technical-specs">
+            <div class="container">
+                <h2 class="section-title">Technical Specifications</h2>
+                <div class="spec-grid">
+                    <div class="spec-card">
+                        <h4>Model Architectures</h4>
+                        <ul>
+                            <li>LLaMA 3.2 1B (Meta)</li>
+                            <li>Gemma 3 1B (Google)</li>
+                            <li>DeepSeek R1 Distill 1.5B</li>
+                            <li>Custom transformer variants</li>
+                        </ul>
+                    </div>
+                    <div class="spec-card">
+                        <h4>Training Configuration</h4>
+                        <ul>
+                            <li>Batch Size: 64-128</li>
+                            <li>Learning Rate: 2e-5</li>
+                            <li>Optimizer: Adam</li>
+                            <li>Max Epochs: 10-15</li>
+                            <li>Block Size: 128 tokens</li>
+                        </ul>
+                    </div>
+                    <div class="spec-card">
+                        <h4>Loss Function Variants</h4>
+                        <ul>
+                            <li>TCE (Truncated-Cross-Entropy)</li>
+                            <li>Focal Loss (γ=2.0)</li>
+                            <li>Clipped Loss (τ=0.99)</li>
+                            <li>Baseline Cross-Entropy</li>
+                        </ul>
+                    </div>
+                    <div class="spec-card">
+                        <h4>Evaluation Benchmarks</h4>
+                        <ul>
+                            <li>BLIMP (Linguistic Acceptability)</li>
+                            <li>GSM8K (Mathematical Reasoning)</li>
+                            <li>HellaSwag (Commonsense Reasoning)</li>
+                            <li>WikiText-2 (Language Modeling)</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Implementation Details -->
+        <section class="implementation-details">
+            <div class="container">
+                <h2 class="section-title">Implementation Details</h2>
+                <div class="implementation-content">
+                    <h3>Core TCE Loss Implementation</h3>
+                    <div class="code-block">
+def truncated_cross_entropy_loss(logits, labels, threshold=0.99):
+    """
+    Compute Truncated-Cross-Entropy loss to filter high-confidence tokens.
+    
+    Args:
+        logits: Model output logits [batch_size, seq_len, vocab_size]
+        labels: Target token IDs [batch_size, seq_len]
+        threshold: Confidence threshold for filtering (default: 0.99)
+    
+    Returns:
+        TCE loss value
+    """
+    # Compute log probabilities
+    log_probs = F.log_softmax(logits, dim=-1)
+    
+    # Get log probabilities for target tokens
+    target_log_probs = log_probs.gather(dim=-1, index=labels.unsqueeze(-1)).squeeze(-1)
+    
+    # Convert threshold to log space
+    log_threshold = math.log(threshold)
+    
+    # Create mask for low-confidence tokens
+    low_confidence_mask = target_log_probs < log_threshold
+    
+    # Compute TCE loss (only on low-confidence tokens)
+    tce_loss = -target_log_probs * low_confidence_mask
+    
+    # Return mean loss (ignoring padding tokens)
+    return tce_loss.sum() / low_confidence_mask.sum().clamp(min=1)
+                    </div>
+
+                    <h3>Training Pipeline</h3>
+                    <div class="code-block">
+class TCEModelTrainer:
+    def __init__(self, model, threshold=0.99, learning_rate=2e-5):
+        self.model = model
+        self.threshold = threshold
+        self.optimizer = AdamW(model.parameters(), lr=learning_rate)
+    
+    def train_step(self, batch):
+        # Forward pass
+        logits = self.model(batch['input_ids'])
+        
+        # Compute TCE loss
+        loss = truncated_cross_entropy_loss(
+            logits, 
+            batch['labels'], 
+            threshold=self.threshold
+        )
+        
+        # Backward pass
+        loss.backward()
+        self.optimizer.step()
+        self.optimizer.zero_grad()
+        
+        return loss.item()
+                    </div>
+
+                    <h3>Multi-Stage Training Process</h3>
+                    <div class="code-block">
+def run_recursive_training(model, dataset_fractions=6):
+    """
+    Run multi-stage training to simulate recursive training scenarios.
+    """
+    for stage in range(dataset_fractions):
+        # Load previous stage model (if not stage 0)
+        if stage > 0:
+            model = load_checkpoint(f"stage_{stage-1}_model.ckpt")
+        
+        # Generate synthetic data using current model
+        synthetic_data = generate_synthetic_data(model, ratio=stage/dataset_fractions)
+        
+        # Mix human and synthetic data
+        mixed_dataset = create_mixed_dataset(human_data, synthetic_data)
+        
+        # Train with TCE loss
+        trainer = TCEModelTrainer(model, threshold=0.99)
+        trainer.train(mixed_dataset, epochs=10)
+        
+        # Save model checkpoint
+        save_checkpoint(model, f"stage_{stage}_model.ckpt")
+        
+        # Evaluate performance
+        evaluate_model(model, benchmarks=['blimp', 'gsm8k', 'hellaswag'])
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Experimental Setup -->
+        <section class="experimental-setup">
+            <div class="container">
+                <h2 class="section-title">Experimental Setup</h2>
+                <div class="experimental-content">
+                    <div class="setup-grid">
+                        <div class="setup-card">
+                            <h4>Hardware Requirements</h4>
+                            <ul>
+                                <li>GPU: NVIDIA A100 or V100 (recommended)</li>
+                                <li>RAM: 32GB+ system memory</li>
+                                <li>Storage: 500GB+ for datasets and checkpoints</li>
+                                <li>CUDA: Version 11.8 or later</li>
+                            </ul>
+                        </div>
+                        <div class="setup-card">
+                            <h4>Software Dependencies</h4>
+                            <ul>
+                                <li>Python 3.8+</li>
+                                <li>PyTorch 2.3.1</li>
+                                <li>Transformers 4.30+</li>
+                                <li>Lightning 2.0+</li>
+                                <li>Datasets 2.12+</li>
+                            </ul>
+                        </div>
+                        <div class="setup-card">
+                            <h4>Dataset Requirements</h4>
+                            <ul>
+                                <li>WikiText-2: Language modeling</li>
+                                <li>BLIMP: Linguistic evaluation</li>
+                                <li>GSM8K: Mathematical reasoning</li>
+                                <li>HellaSwag: Commonsense reasoning</li>
+                            </ul>
+                        </div>
+                        <div class="setup-card">
+                            <h4>Training Time</h4>
+                            <ul>
+                                <li>Single stage: 2-4 hours (1B model)</li>
+                                <li>Full pipeline: 12-24 hours</li>
+                                <li>Evaluation: 1-2 hours per stage</li>
+                                <li>Total runtime: 15-30 hours</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Mathematical Foundations -->
+        <section class="mathematical-foundations">
+            <div class="container">
+                <h2 class="section-title">Mathematical Foundations</h2>
+                <div class="math-content">
+                    <h3>Theoretical Analysis</h3>
+                    <p>
+                        The effectiveness of TCE can be understood through information-theoretic principles. 
+                        High-confidence tokens in synthetic data often contain redundant or artificial patterns 
+                        that don't generalize well. By filtering these tokens, we preserve the information 
+                        content while removing noise.
+                    </p>
+                    
+                    <div class="formula-container">
+                        <h4>Information-Theoretic Justification</h4>
+                        <div class="formula">
+                            I(X;Y) = H(X) - H(X|Y) = H(Y) - H(Y|X)
+                        </div>
+                        <div class="formula-explanation">
+                            Mutual information between input X and output Y, where H(·) is entropy
+                        </div>
+                    </div>
+                    
+                    <div class="formula-container">
+                        <h4>Confidence Threshold Optimization</h4>
+                        <div class="formula">
+                            τ* = argmin<sub>τ</sub> E[L_TCE(θ, τ)] + λ·R(τ)
+                        </div>
+                        <div class="formula-explanation">
+                            Optimal threshold balancing loss minimization and regularization
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>ForTIFAI</h3>
+                    <p>Fending Off Recursive Training Induced Failure for AI Models</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Links</h4>
+                    <ul>
+                        <li><a href="https://arxiv.org/abs/2509.08972">Paper</a></li>
+                        <li><a href="https://github.com/your-username/ForTIFAI">Code</a></li>
+                        <li><a href="index.html#demo">Demo</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Contact</h4>
+                    <p>For technical questions and collaborations.</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 ForTIFAI. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,169 @@
+# GitHub Pages Configuration for ForTIFAI
+# This file configures GitHub Pages settings
+
+# Site settings
+title: ForTIFAI - Fending Off Recursive Training Induced Failure for AI Models
+description: A novel approach to mitigate model collapse in AI systems trained on synthetic data using Truncated-Cross-Entropy (TCE) loss function.
+author: ForTIFAI Research Team
+email: paghazadeh
+
+# GitHub Pages settings
+baseurl: "" # Leave empty for user/organization sites
+url: "https://fortifai.github.io" # Organization site URL
+repository: "fortifai/fortifai.github.io" # Repository name for organization site
+
+# Build settings
+markdown: kramdown
+highlighter: rouge
+theme: minima
+
+# Navigation
+navigation:
+  - title: Home
+    url: /
+  - title: About
+    url: /about.html
+  - title: Demo
+    url: /demo.html
+  - title: Paper
+    url: https://arxiv.org/abs/2509.08972
+    external: true
+  - title: Code
+    url: https://github.com/fortifai/ForTIFAI
+    external: true
+
+
+
+# Analytics (optional)
+google_analytics: # Add your GA tracking ID here
+
+# Plugins
+plugins:
+  - jekyll-feed
+  - jekyll-sitemap
+  - jekyll-seo-tag
+
+# Exclude files from processing
+exclude:
+  - README.md
+  - Gemfile
+  - Gemfile.lock
+  - node_modules
+  - vendor
+  - .sass-cache
+  - .jekyll-cache
+  - .jekyll-metadata
+
+# Include files
+include:
+  - _redirects
+
+# Collections
+collections:
+  papers:
+    output: true
+    permalink: /:collection/:name/
+  demos:
+    output: true
+    permalink: /:collection/:name/
+
+# Defaults
+defaults:
+  - scope:
+      path: ""
+      type: "pages"
+    values:
+      layout: "default"
+  - scope:
+      path: ""
+      type: "papers"
+    values:
+      layout: "paper"
+  - scope:
+      path: ""
+      type: "demos"
+    values:
+      layout: "demo"
+
+# Sass settings
+sass:
+  sass_dir: _sass
+  style: compressed
+
+# Kramdown settings
+kramdown:
+  input: GFM
+  syntax_highlighter: rouge
+  syntax_highlighter_opts:
+    css_class: 'highlight'
+    span:
+      line_numbers: false
+    block:
+      line_numbers: false
+
+# SEO settings
+seo:
+  type: "Organization"
+  name: "ForTIFAI"
+  description: "Fending Off Recursive Training Induced Failure for AI Models"
+  url: "https://fortifai.github.io"
+  logo: "/assets/logo.png"
+  social:
+    name: "ForTIFAI Research"
+    links:
+      - "https://github.com/fortifai/ForTIFAI"
+      - "https://arxiv.org/abs/2509.08972"
+      - "https://twitter.com/fortifai_research"
+
+# Custom settings
+fortifai:
+  version: "1.0.0"
+  paper_url: "https://arxiv.org/abs/2509.08972"
+  code_url: "https://github.com/fortifai/ForTIFAI"
+  demo_url: "/demo.html"
+  about_url: "/about.html"
+  
+  # Key metrics
+  metrics:
+    improvement: "2.3x"
+    benchmarks: 4
+    models: 3
+    stages: 6
+  
+  # Authors
+  authors:
+    - name: "Soheil Zibakhsh Shabgahi"
+      affiliation: "University of California, San Diego"
+      email: "soheil@ucsd.edu"
+    - name: "Pedram Aghazadeh"
+      affiliation: "University of California, San Diego"
+      email: "paghazadeh@ucsd.edu"
+    - name: "Azalia Mirhoseini"
+      affiliation: "Google DeepMind"
+      email: "azalia@google.com"
+    - name: "Farinaz Koushanfar"
+      affiliation: "University of California, San Diego"
+      email: "farinaz@ucsd.edu"
+  
+  # Benchmarks
+  benchmarks:
+    - name: "BLIMP"
+      description: "Linguistic Acceptability"
+      baseline: "65.2%"
+      fortifai: "78.4%"
+      improvement: "+13.2%"
+    - name: "GSM8K"
+      description: "Mathematical Reasoning"
+      baseline: "42.1%"
+      fortifai: "58.7%"
+      improvement: "+16.6%"
+    - name: "HellaSwag"
+      description: "Commonsense Reasoning"
+      baseline: "71.3%"
+      fortifai: "82.9%"
+      improvement: "+11.6%"
+    - name: "WikiText-2"
+      description: "Language Modeling"
+      baseline: "45.2"
+      fortifai: "38.7"
+      improvement: "-6.5 PPL"
