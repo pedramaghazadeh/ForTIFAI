@@ -135,7 +135,7 @@ The repository implements several loss functions for comparison:
 - **GSM8K**: Mathematical reasoning
 - **HellaSwag**: Commonsense reasoning
 - **WikiText-2**: Language modeling perplexity
-- **Knowledge Tracing**: Custom evaluation for synthetic data quality
+- **Knowledge Retention**: Custom evaluation for synthetic data quality
 
 ## 🔬 Experimental Results
 
