@@ -1,0 +1,13 @@
+torch==2.3.1
+accelerate==0.27.2
+datasketch==1.6.4
+transformers
+datasets
+wandb
+huggingface-hub
+dpu_utils
+black
+lightning
+pydantic
+omegaconf
+boto3
